@@ -31,7 +31,7 @@ def call(Map pipelineParams) {
                     cleanWs()
                     println('Starting git operations...')
                     withCredentials([gitUsernamePassword(credentialsId: 'github-credentials', gitToolName: 'Default')]) {
-                        checkout scmGit(branches: [[name: "*/'${env.branch}'"]], extensions: [], userRemoteConfigs: [[credentialsId: 'github-credentials', url: "${env.gitUrl}"]])
+                        checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github-credentials', url: "${env.gitUrl}"]])
                         powershell "git checkout '${env.branch}'"
                         powershell 'git gc'
                         powershell 'git fetch'
