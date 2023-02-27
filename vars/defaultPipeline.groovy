@@ -22,12 +22,7 @@ def call(Map pipelineParams) {
             deployFolder = "C:\\Archives\\${env.proj}"
             pathVersion = "./Build/Scripts/${env.proj}.version"
             delimiter = '.'
-            items = null
-            startIndex = ''
-            nextIndex = ''
-            lastItem = 0
-            incremented = 0
-            newVersion = null
+            startIndex = 0
         }
 
         stages {
@@ -53,8 +48,9 @@ def call(Map pipelineParams) {
                     println('Starting to version source')
                     script {
                         def versionFile = readFile(env.pathVersion)
+                        def items = []
                         println('Before version = ' + versionFile)
-                        nextIndex = versionFile.indexOf(delimiter)
+                        def nextIndex = versionFile.indexOf(delimiter)
                         while (nextIndex >= 0) {
                             items << versionFile.substring(startIndex, nextIndex)
                             startIndex = nextIndex + delimiter.length()
@@ -62,11 +58,11 @@ def call(Map pipelineParams) {
                         }
                         items << versionFile.substring(startIndex)
 
-                        lastItem = items[-1]
-                        incremented = Integer.parseInt(lastItem) + 1
+                        def lastItem = items[-1]
+                        def incremented = Integer.parseInt(lastItem) + 1
                         items.set(items.size() - 1, incremented.toString())
 
-                        newVersion = items.join(delimiter)
+                        def newVersion = items.join(delimiter)
                         writeFile file: 'env.pathVersion', text: newVersion
                         def versionFile2 = readFile(env.pathVersion)
                         println('New Version = ' + versionFile2)
