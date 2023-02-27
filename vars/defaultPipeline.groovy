@@ -98,7 +98,7 @@ def call(Map pipelineParams) {
             stage('Deploy Build') {
                 steps {
                     println('Starting pre deploy steps...')
-                    powershell "Copy-Item -Path '${env.localFolder}\\Source\\Data\\*.sql' -Destination '${env.buildOutputFolder}\\Applications\\${env.proj}\\' -Recurse"
+                    powershell "Copy-Item -Path '${env.WORKSPACE}\\Source\\Data\\*.sql' -Destination '${env.buildOutputFolder}\\Applications\\${env.proj}\\' -Recurse"
                     echo 'Deploying build content to the deploy folder'
                     powershell "mkdir '${env.buildOutputFolder}\\..\\Debug'"
                     powershell "Copy-Item -Path '${env.buildOutputFolder}\\*' -Destination '${env.buildOutputFolder}\\..\\Debug' -Recurse"
@@ -123,7 +123,7 @@ def call(Map pipelineParams) {
                     powershell "Copy-Item -Path '${env.buildOutputFolder}\\Applications\\**\\wwwroot\\**\\**' -Destination '${env.binariesArchiveWorkingDirectory}' -Recurse"
 
                     echo 'Starting archive of source'
-                    powershell "Copy-Item -Path '${env.localFolder}\\Source\\**\\*.*' -Exclude '${env.localFolder}\\Source\\**\\obj\\**\\*.*' -Destination '${env.sourceArchiveWorkingDirectory}' -Recurse"
+                    powershell "Copy-Item -Path '${env.WORKSPACE}\\Source\\**\\*.*' -Exclude '${env.WORKSPACE}\\Source\\**\\obj\\**\\*.*' -Destination '${env.sourceArchiveWorkingDirectory}' -Recurse"
 
                     echo 'Starting archive of installs'
                     powershell "Copy-Item -Path '${env.buildOutputFolder}\\Setup\\*' -Destination '${env.installsArchiveWorkingDirectory}' -Recurse"
