@@ -21,7 +21,6 @@ def call(Map pipelineParams) {
             branch = "${pipelineParams.branch}"
             deployFolder = "C:\\Archives\\${env.proj}"
             pathVersion = "./Build/Scripts/${env.proj}.version"
-            delimiter = '.'
         }
 
         stages {
@@ -48,6 +47,7 @@ def call(Map pipelineParams) {
                     script {
                         def versionFile = readFile(env.pathVersion)
                         def items = []
+                        def delimiter = '.'
                         println('Before version = ' + versionFile)
                         def int startIndex = 0
                         def int nextIndex = versionFile.indexOf(delimiter)
