@@ -140,15 +140,13 @@ def call(Map pipelineParams) {
                     powershell "if (-not (Test-Path '${env.deployFolder}')) { New-Item -ItemType Directory -Path '${env.deployFolder}' }"
 
                     powershell "if ( (Test-Path '${env.deployFolder}\\*.zip')) { Remove-Item '${env.deployFolder}\\*' -Recurse }"
-                    powershell "if ( (Test-Path '${env.deployFolder}')) { New-Item -ItemType Directory -Path '${env.deployFolder}' }"
-                //    powershell "if ( (Test-Path '${env.deployFolder}')) { New-Item -ItemType Directory -Path '${env.deployFolder}' }"
-                //    powershell "if ( (Test-Path '${env.deployFolder}')) { New-Item -ItemType Directory -Path '${env.deployFolder}' }"
+                    powershell "if (-not (Test-Path '${env.deployFolder}')) { New-Item -ItemType Directory -Path '${env.deployFolder}' }"
 
                     powershell "Move-Item -Path '${env.sourceArchiveFileName}' -Destination '${env.deployFolder}'"
                     powershell "Move-Item -Path '${env.binariesArchiveFileName}' -Destination '${env.deployFolder}'"
                     powershell "Move-Item -Path '${env.installsArchiveFileName}' -Destination '${env.deployFolder}'"
                     powershell "Move-Item -Path '${env.scriptsArchiveFileName}' -Destination '${env.deployFolder}'"
-                    powershell "Remove-Item -Path '${env.WORKSPACE}\\Archives'"
+                    powershell "Remove-Item -Path '${env.WORKSPACE}\\Archives' -Recurse"
 
                     echo 'Cleaning up...'
                     powershell "Get-ChildItem -Path '${env.buildOutputFolder}\\..\\Debug' -Recurse | Remove-Item -Recurse"
