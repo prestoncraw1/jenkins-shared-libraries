@@ -23,8 +23,8 @@ def call(Map pipelineParams) {
             pathVersion = "./Build/Scripts/${env.proj}.version"
             delimiter = '.'
             items = null
-            startIndex = 0
-            nextIndex = 0
+            startIndex = ''
+            nextIndex = ''
             lastItem = 0
             incremented = 0
             newVersion = null
