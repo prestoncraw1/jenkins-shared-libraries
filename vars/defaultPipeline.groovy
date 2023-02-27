@@ -21,7 +21,7 @@ def call(Map pipelineParams) {
             branch = "${pipelineParams.branch}"
             deployFolder = "C:\\Archives\\${env.proj}"
             pathVersion = "./Build/Scripts/${env.proj}.version"
-            delimeter = '.'
+            delimiter = '.'
             items = null
             startIndex = 0
             nextIndex = 0
