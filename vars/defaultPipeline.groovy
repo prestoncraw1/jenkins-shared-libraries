@@ -67,7 +67,7 @@ def call(Map pipelineParams) {
                         def versionFile2 = readFile(env.pathVersion)
                         println('New Version = ' + versionFile2)
 
-                        changeAsmVer assemblyFile: "**/AssemblyInfo.cs",
+                        changeAsmVer assemblyFile: '**/AssemblyInfo.cs',
                         versionPattern: versionFile2
                         powershell 'git add --all'
                         powershell "git commit -m '${env.project}: Version change for build v${versionFile2}-${env.branch}'"
@@ -137,12 +137,13 @@ def call(Map pipelineParams) {
                     powershell "Compress-Archive -Path '${env.installsArchiveWorkingDirectory}' -DestinationPath '${installsArchiveFileName}' "
                     powershell "Compress-Archive -Path '${env.scriptsArchiveWorkingDirectory}' -DestinationPath '${scriptsArchiveFileName}' "
                     powershell "Compress-Archive -Path '${env.sourceArchiveWorkingDirectory}' -DestinationPath '${sourceArchiveFileName}' "
+                    powershell "if ((Test-Path '${env.deployFolder}')) { Remove-Item -Path '${env.deployFolder}' }"
                     powershell "if (-not (Test-Path '${env.deployFolder}')) { New-Item -ItemType Directory -Path '${env.deployFolder}' }"
 
                     powershell "if ( (Test-Path '${env.deployFolder}\\*.zip')) { Remove-Item '${env.deployFolder}\\*' -Recurse }"
                     powershell "if ( (Test-Path '${env.deployFolder}')) { New-Item -ItemType Directory -Path '${env.deployFolder}' }"
-                    powershell "if ( (Test-Path '${env.deployFolder}')) { New-Item -ItemType Directory -Path '${env.deployFolder}' }"
-                    powershell "if ( (Test-Path '${env.deployFolder}')) { New-Item -ItemType Directory -Path '${env.deployFolder}' }"
+                //    powershell "if ( (Test-Path '${env.deployFolder}')) { New-Item -ItemType Directory -Path '${env.deployFolder}' }"
+                //    powershell "if ( (Test-Path '${env.deployFolder}')) { New-Item -ItemType Directory -Path '${env.deployFolder}' }"
 
                     powershell "Move-Item -Path '${env.sourceArchiveFileName}' -Destination '${env.deployFolder}'"
                     powershell "Move-Item -Path '${env.binariesArchiveFileName}' -Destination '${env.deployFolder}'"
