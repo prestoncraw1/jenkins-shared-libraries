@@ -38,7 +38,7 @@ def call(Map pipelineParams) {
                         powershell "git reset --hard origin/'${env.branch}'"
                         powershell 'git clean -f -d -x'
                         println('Starting nuget restore')
-                    //    powershell "nuget restore ${env.projSln}"
+                        powershell "nuget restore ${env.projSln}"
                     }
                 }
             }
