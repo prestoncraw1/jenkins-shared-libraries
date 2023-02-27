@@ -22,6 +22,15 @@ def call(Map pipelineParams) {
             branch = "${pipelineParams.branch}"
             deployFolder = "C:\\Archives\\${env.proj}"
             pathVersion = "./Build/Scripts/${env.proj}.version"
+            delimeter = '.'
+            items = []
+            startIndex = 0
+            nextIndex = 0
+            lastItem = 0
+            incremented = 0
+            newVersion = []
+            versionFile2 = ''
+            versionFile = ''
         }
 
         stages {
@@ -46,12 +55,9 @@ def call(Map pipelineParams) {
                 steps {
                     println('Starting to version source')
                     script {
-                        def versionFile = readFile(env.pathVersion)
-                        println('Before version =' + versionFile)
-                        def delimiter = '.'
-                        def items = []
-                        int startIndex = 0
-                        int nextIndex = versionFile.indexOf(delimiter)
+                        versionFile = readFile(env.pathVersion)
+                        println('Before version = ' + versionFile)
+                        nextIndex = versionFile.indexOf(delimiter)
                         while (nextIndex >= 0) {
                             items << versionFile.substring(startIndex, nextIndex)
                             startIndex = nextIndex + delimiter.length()
@@ -59,13 +65,13 @@ def call(Map pipelineParams) {
                         }
                         items << versionFile.substring(startIndex)
 
-                        def lastItem = items.get(items.size() - 1)
-                        def incremented = Integer.parseInt(lastItem) + 1
+                        lastItem = items[-1]
+                        incremented = Integer.parseInt(lastItem) + 1
                         items.set(items.size() - 1, incremented.toString())
 
-                        def newVersion = items.join(delimiter)
+                        newVersion = items.join(delimiter)
                         writeFile file: 'env.pathVersion', text: newVersion
-                        def versionFile2 = readFile(env.pathVersion)
+                        versionFile2 = readFile(env.pathVersion)
                         println('New Version = ' + versionFile2)
 
                         changeAsmVer assemblyFile: "**/AssemblyInfo.cs",
