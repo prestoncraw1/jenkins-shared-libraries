@@ -9,7 +9,6 @@ def call(Map pipelineParams) {
             projSln = "${env.WORKSPACE}\\Source\\${env.projName}"
             buildFlavor = 'Release'
             buildOutputFolder = "${env.WORKSPACE}\\Build\\Output\\${env.projName}"
-            versionFile = "${env.WORKSPACE}\\Build\\Scripts\\${env.proj}.version"
             binariesToArchive = "${env.buildOutputFolder}\\Applications\\${env.proj}"
             binariesArchiveWorkingDirectory = "${env.WORKSPACE}\\Archives\\Binaries"
             installsArchiveWorkingDirectory = "${env.WORKSPACE}\\Archives\\Installs"
