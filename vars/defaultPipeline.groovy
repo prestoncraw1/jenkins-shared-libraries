@@ -2,8 +2,8 @@ def call(Map pipelineParams) {
     pipeline {
         agent any
         environment {
-            gitUrl = "${pipelineParams.gitUrl}"
-            proj = "${pipelineParams.proj}"
+            gitUrl = ${pipelineParams.gitUrl}
+            proj = ${pipelineParams.proj}
             projGit = "${env.proj}.git"
             projName = "${env.proj}.sln"
             projSln = "${env.WORKSPACE}\\Source\\${env.projName}"
@@ -19,7 +19,7 @@ def call(Map pipelineParams) {
             sourceArchiveFileName = "${env.WORKSPACE}\\Archives\\${env.proj}\\.Source.zip"
             scriptsArchiveFileName = "${env.WORKSPACE}\\Archives\\${env.proj}\\.Scripts.zip"
             installsArchiveFileName = "${env.WORKSPACE}\\Archives\\${env.proj}\\.Installs.zip"
-            branch = "${pipelineParams.branch}"
+            branch = ${pipelineParams.branch}
             deployFolder = "C:\\Archives\\${env.proj}"
             pathVersion = "./Build/Scripts/${env.proj}.version"
         }
