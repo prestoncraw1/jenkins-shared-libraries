@@ -46,7 +46,7 @@ def call(Map pipelineParams) {
                 steps {
                     println('Starting to version source')
                     script {
-                        def versionFile = readFile(env.pathVersion)
+                        def versionFile = readFile('${env.pathVersion}')
                         println('Before version =' + versionFile)
                         def delimiter = '.'
                         def items = []
@@ -65,10 +65,10 @@ def call(Map pipelineParams) {
 
                         def newVersion = items.join(delimiter)
                         writeFile file: '${env.pathVersion}', text: newVersion
-                        def versionFile2 = readFile(env.pathVersion)
-                        println('New Version =' + versionFile2)
+                        def versionFile2 = readFile('${env.pathVersion}')
+                        println('New Version = ' + versionFile2)
 
-                        changeAsmVer assemblyFile: '**/AssemblyInfo.cs',
+                        changeAsmVer assemblyFile: "**/AssemblyInfo.cs",
                         versionPattern: versionFile2
                         powershell 'git add --all'
                         powershell "git commit -m '${env.project}: Version change for build v${versionFile2}-${env.branch}'"
