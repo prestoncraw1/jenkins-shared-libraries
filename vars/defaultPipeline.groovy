@@ -28,8 +28,6 @@ def call(Map pipelineParams) {
             lastItem = 0
             incremented = 0
             newVersion = null
-            versionFile2 = ''
-            versionFile = ''
         }
 
         stages {
@@ -54,7 +52,7 @@ def call(Map pipelineParams) {
                 steps {
                     println('Starting to version source')
                     script {
-                        versionFile = readFile(env.pathVersion)
+                        def versionFile = readFile(env.pathVersion)
                         println('Before version = ' + versionFile)
                         nextIndex = versionFile.indexOf(delimiter)
                         while (nextIndex >= 0) {
@@ -70,7 +68,7 @@ def call(Map pipelineParams) {
 
                         newVersion = items.join(delimiter)
                         writeFile file: 'env.pathVersion', text: newVersion
-                        versionFile2 = readFile(env.pathVersion)
+                        def versionFile2 = readFile(env.pathVersion)
                         println('New Version = ' + versionFile2)
 
                         changeAsmVer assemblyFile: "**/AssemblyInfo.cs",
