@@ -78,8 +78,7 @@ def call(Map pipelineParams) {
             stage('Build') {
                 steps {
                     println('Starting to build...')
-                    println(env.projectSolution)
-                    powershell "msbuild /p:GitBranch='${env.branch}' /p:Configuration='${env.buildFlavor}' /p:BuildInParallel=false ${env.projectSolution}"
+                    powershell "msbuild /p:GitBranch='${env.branch}' /p:Configuration='${env.buildFlavor}' /p:BuildInParallel=false ${env.prjSolution}"
                 }
             }
             stage('Unit Testing') {
