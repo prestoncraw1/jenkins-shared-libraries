@@ -38,7 +38,7 @@ def call(Map pipelineParams) {
                         powershell "git reset --hard origin/'${env.branch}'"
                         powershell 'git clean -f -d -x'
                         println('Starting nuget restore')
-                        powershell "nuget restore ${env.projSln}"
+                    //    powershell "nuget restore ${env.projSln}"
                     }
                 }
             }
@@ -63,7 +63,7 @@ def call(Map pipelineParams) {
                         items.set(items.size() - 1, incremented.toString())
 
                         def newVersion = items.join(delimiter)
-                        writeFile file: 'env.pathVersion', text: newVersion
+                        writeFile file: '${env.pathVersion}', text: newVersion
                         def versionFile2 = readFile(env.pathVersion)
                         println('New Version = ' + versionFile2)
 
