@@ -23,12 +23,12 @@ def call(Map pipelineParams) {
             deployFolder = "C:\\Archives\\${env.proj}"
             pathVersion = "./Build/Scripts/${env.proj}.version"
             delimeter = '.'
-            items = []
+            items = null
             startIndex = 0
             nextIndex = 0
             lastItem = 0
             incremented = 0
-            newVersion = []
+            newVersion = null
             versionFile2 = ''
             versionFile = ''
         }
