@@ -63,7 +63,7 @@ def call(Map pipelineParams) {
                         items.set(items.size() - 1, incremented.toString())
 
                         def newVersion = items.join(delimiter)
-                        writeFile file: '${env.pathVersion}', text: newVersion
+                        writeFile file: pathVersion, text: newVersion
                         def versionFile2 = readFile(env.pathVersion)
                         println('New Version = ' + versionFile2)
 
